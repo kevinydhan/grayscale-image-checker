@@ -53,21 +53,19 @@ const getMaxDifference = (red, green, blue) => {
  * @param {number} tolerance
  * @returns {boolean}
  */
-const isGreyScale = (data, tolerance) => {
+const isGrayscale = (data, tolerance) => {
   let red = 0
   let green = 0
   let blue = 0
 
   for (let i = 0; i < data.length - 3; i += 4) {
-    red += data[i]
-    green += data[i + 1]
-    blue += data[i + 2]
+    red = data[i]
+    green = data[i + 1]
+    blue = data[i + 2]
+    if (red !== green || red !== blue || green !== blue) return false
   }
-  console.log('RGB', { red, green, blue })
 
-  const isTolerant = getMaxDifference(red, green, blue) <= tolerance
-
-  return (red === green && red === blue) || isTolerant
+  return true
 }
 
 const code = document.querySelector('code')
@@ -77,16 +75,16 @@ const fileInput = document.querySelector('input[type="file"]')
  * @param {File} file
  * @returns {void}
  */
-const displayIsGreyText = async (file) => {
+const displayIsGrayText = async (file) => {
   const numberInput = document.querySelector('input[type="number"]')
   code.innerText = ''
   const src = await getDataUrl(file)
   const img = await getImage(src)
   const data = getImageData(img)
-  const isGrey = isGreyScale(data, numberInput.value)
+  const isGrey = isGrayscale(data, numberInput.value)
   code.innerText = isGrey
 }
 
 fileInput.addEventListener('change', () => {
-  displayIsGreyText(fileInput.files[0])
+  displayIsGrayText(fileInput.files[0])
 })

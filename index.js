@@ -35,11 +35,28 @@ const getImageData = (img) => {
   return data.data
 }
 
+const getMaxDifference = (red, green, blue) => {
+  let maxDifference = 0
+
+  if (Math.abs(red - green) > maxDifference) {
+    maxDifference = Math.abs(red - green)
+  }
+  if (Math.abs(red - blue) > maxDifference) {
+    maxDifference = Math.abs(red - blue)
+  }
+  if (Math.abs(green - blue) > maxDifference) {
+    maxDifference = Math.abs(green - blue)
+  }
+
+  return maxDifference
+}
+
 /**
  * @param {Uint8ClampedArray} data
+ * @param {number} [tolerance=10]
  * @returns {boolean}
  */
-const isGreyScale = (data) => {
+const isGreyScale = (data, tolerance = 10) => {
   let red = 0
   let green = 0
   let blue = 0
@@ -51,7 +68,9 @@ const isGreyScale = (data) => {
   }
   console.log({ red, green, blue })
 
-  return red === green && red === blue
+  const isTolerant = getMaxDifference(red, green, blue) <= tolerance
+
+  return (red === green && red === blue) || isTolerant
 }
 
 const code = document.querySelector('code')

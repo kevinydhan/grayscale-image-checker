@@ -35,20 +35,17 @@ const getImageData = (img) => {
   return data.data
 }
 
+/**
+ * @param {number} red
+ * @param {number} green
+ * @param {number} blue
+ * @returns {number}
+ */
 const getMaxDifference = (red, green, blue) => {
-  let maxDifference = 0
-
-  if (Math.abs(red - green) > maxDifference) {
-    maxDifference = Math.abs(red - green)
-  }
-  if (Math.abs(red - blue) > maxDifference) {
-    maxDifference = Math.abs(red - blue)
-  }
-  if (Math.abs(green - blue) > maxDifference) {
-    maxDifference = Math.abs(green - blue)
-  }
-
-  return maxDifference
+  const d1 = Math.abs(red - green)
+  const d2 = Math.abs(red - blue)
+  const d3 = Math.abs(green - blue)
+  return Math.max(d1, d2, d3)
 }
 
 /**
@@ -66,7 +63,7 @@ const isGreyScale = (data, tolerance = 10) => {
     green += data[i + 1]
     blue += data[i + 2]
   }
-  console.log({ red, green, blue })
+  console.log('RGB', { red, green, blue })
 
   const isTolerant = getMaxDifference(red, green, blue) <= tolerance
 

@@ -66,6 +66,7 @@ const displayIsGreyText = async (file) => {
   const img = await getImage(src)
   const data = getImageData(img)
   const isGrey = isGreyScale(data)
+  console.log({ isGrey })
   code.innerText = isGrey
 }
 

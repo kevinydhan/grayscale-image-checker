@@ -57,12 +57,16 @@ const isGrayscale = (data, tolerance) => {
   let red = 0
   let green = 0
   let blue = 0
+  let areEqual
+  let isTolerant
 
   for (let i = 0; i < data.length - 3; i += 4) {
     red = data[i]
     green = data[i + 1]
     blue = data[i + 2]
-    if (red !== green || red !== blue || green !== blue) return false
+    areEqual = red === green && red === blue
+    isTolerant = getMaxDifference(red, green, blue) <= tolerance
+    if (!areEqual && !isTolerant) return false
   }
 
   return true

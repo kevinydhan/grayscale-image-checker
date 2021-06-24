@@ -49,6 +49,7 @@ const isGreyScale = (data) => {
     green += data[i + 1]
     blue += data[i + 2]
   }
+  console.log({ red, green, blue })
 
   return red === green && red === blue
 }
@@ -66,7 +67,6 @@ const displayIsGreyText = async (file) => {
   const img = await getImage(src)
   const data = getImageData(img)
   const isGrey = isGreyScale(data)
-  console.log({ isGrey })
   code.innerText = isGrey
 }
 

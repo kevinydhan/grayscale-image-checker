@@ -50,10 +50,10 @@ const getMaxDifference = (red, green, blue) => {
 
 /**
  * @param {Uint8ClampedArray} data
- * @param {number} [tolerance=10]
+ * @param {number} tolerance
  * @returns {boolean}
  */
-const isGreyScale = (data, tolerance = 10) => {
+const isGreyScale = (data, tolerance) => {
   let red = 0
   let green = 0
   let blue = 0
@@ -71,19 +71,22 @@ const isGreyScale = (data, tolerance = 10) => {
 }
 
 const code = document.querySelector('code')
-const input = document.querySelector('input')
+const fileInput = document.querySelector('input[type="file"]')
 
 /**
  * @param {File} file
  * @returns {void}
  */
 const displayIsGreyText = async (file) => {
+  const numberInput = document.querySelector('input[type="number"]')
   code.innerText = ''
   const src = await getDataUrl(file)
   const img = await getImage(src)
   const data = getImageData(img)
-  const isGrey = isGreyScale(data)
+  const isGrey = isGreyScale(data, numberInput.value)
   code.innerText = isGrey
 }
 
-input.addEventListener('change', () => displayIsGreyText(input.files[0]))
+fileInput.addEventListener('change', () => {
+  displayIsGreyText(fileInput.files[0])
+})

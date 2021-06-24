@@ -85,7 +85,7 @@ const displayIsGrayText = async (file) => {
   const src = await getDataUrl(file)
   const img = await getImage(src)
   const data = getImageData(img)
-  const isGrey = isGrayscale(data, numberInput.value)
+  const isGrey = isGrayscale(data, Number(numberInput.value))
   code.innerText = isGrey
 }
 
